@@ -26,3 +26,17 @@ def test_backtracking_alternation():
     assert backtracking.regex_match_backtrack(("alternation", "a", "b"), "b") == True
     assert backtracking.regex_match_backtrack(("alternation", "a", "b"), "ab") == False
     assert backtracking.regex_match_backtrack(("alternation", "a", "b"), "ba") == False
+
+
+def test_backtracking_alternation_concatenation():
+    # (a | b)c
+    node = ("concatenation", ("alternation", "a", "b"), "c")
+    assert backtracking.regex_match_backtrack(node, "ac") == True
+    assert backtracking.regex_match_backtrack(node, "bc") == True
+    assert backtracking.regex_match_backtrack(node, "ab") == False
+    # (ab | ac)
+    node = ("alternation", ("concatenation", "a", "b"), ("concatenation", "a", "c"))
+    assert backtracking.regex_match_backtrack(node, "ab") == True
+    assert backtracking.regex_match_backtrack(node, "ac") == True
+    assert backtracking.regex_match_backtrack(node, "ba") == False
+    assert backtracking.regex_match_backtrack(node, "abc") == False
