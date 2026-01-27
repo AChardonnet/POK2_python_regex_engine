@@ -8,4 +8,16 @@ def parse_alternation(string, index):
 
 # ab
 def parse_concatenation(string, index):
-    return ("concatenation", string[index], string[index+1])
+    left = None
+    while index < len(string):
+        if string[index] == "|":
+            break
+        right = string[index]
+        index += 1
+        if left is None:
+            left = right
+        else:
+            left = ("concatenation", left, right)
+    return left
+
+print(parse_concatenation("abcd",0))
