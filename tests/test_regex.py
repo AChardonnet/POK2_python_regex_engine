@@ -19,3 +19,7 @@ def test_concatenation_parsing():
 def test_concatenation_long_parsing():
     assert pyregex.parse_concatenation("abc", 0) == (3, ("concatenation", ("concatenation", "a", "b"), "c"))
     assert pyregex.parse_concatenation("abcd", 0) == (4, ('concatenation', ('concatenation', ('concatenation', 'a', 'b'), 'c'), 'd'))
+
+def test_character_parsing():
+    assert pyregex.parse_character("a", 0) == (1, "a")
+    assert pyregex.parse_character("ab", 0) == (1, "a")

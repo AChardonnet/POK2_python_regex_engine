@@ -16,12 +16,15 @@ def parse_concatenation(string, index):
     while index < len(string):
         if string[index] == "|":
             break
-        right = string[index]
-        index += 1
+        index, right = parse_character(string, index)
         if left is None:
             left = right
         else:
             left = ("concatenation", left, right)
     return index, left
 
-print(parse_alternation("ab|cd",0))
+
+def parse_character(string, index):
+    character = string[index]
+    index += 1
+    return index, character
