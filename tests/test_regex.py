@@ -44,3 +44,5 @@ def test_alternation_parenthesis_parsing():
 
 def test_repeat_parsing():
     assert pyregex.parse_alternation("a*", 0) == (2, ("repeat", "a", 0, float("inf")))
+    assert pyregex.parse_alternation("a+", 0) == (2, ("repeat", "a", 1, float("inf")))
+    assert pyregex.parse_alternation("a{4,42}", 0) == (7, ("repeat", "a", 4, 42))
