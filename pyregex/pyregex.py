@@ -36,8 +36,24 @@ def parse_character(string, index):
             index += 1
         else:
             raise Exception("missing )")
+    elif character in "*":
+        raise Exception("first charcter cannot be a repeat")
     else:
         node = character
+    index, node = parse_repeat(string, index, node)
     return index, node
 
-parse_alternation("ab(cd|ef)", 0)
+def parse_repeat(string, index, node):
+    if index == len(string) or string[index] not in "*":
+        return index, node
+    
+    character = string[index]
+    index += 1
+    if character == "*":
+        rmin = 0
+        rmax = float("inf")
+    
+    node = ("repeat", node, rmin, rmax)
+    return index, node
+
+print(parse_alternation("a*", 0))

@@ -41,3 +41,6 @@ def test_character_parsing():
 def test_alternation_parenthesis_parsing():
     print(pyregex.parse_alternation("ab(cd|ef)", 0))
     assert pyregex.parse_alternation("ab(cd|ef)", 0) == (9, ('concatenation', ('concatenation', 'a', 'b'), ('alternation', ('concatenation', 'c', 'd'), ('concatenation', 'e', 'f'))))
+
+def test_repeat_parsing():
+    assert pyregex.parse_alternation("a*", 0) == (2, ("repeat", "a", 0, float("inf")))
