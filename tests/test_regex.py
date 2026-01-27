@@ -23,3 +23,21 @@ def test_concatenation_long_parsing():
 def test_character_parsing():
     assert pyregex.parse_character("a", 0) == (1, "a")
     assert pyregex.parse_character("ab", 0) == (1, "a")
+
+    assertionErrorRaised = False
+    try: 
+        pyregex.parse_character("|", 0)
+    except AssertionError:
+        assertionErrorRaised = True
+    assert assertionErrorRaised, "Should raise an assertion error"
+
+    assertionErrorRaised = False
+    try: 
+        pyregex.parse_character(")", 0)
+    except AssertionError:
+        assertionErrorRaised = True
+    assert assertionErrorRaised, "Should raise an assertion error"
+
+def test_alternation_parenthesis_parsing():
+    print(pyregex.parse_alternation("ab(cd|ef)", 0))
+    assert pyregex.parse_alternation("ab(cd|ef)", 0) == (9, ('concatenation', ('concatenation', 'a', 'b'), ('alternation', ('concatenation', 'c', 'd'), ('concatenation', 'e', 'f'))))
