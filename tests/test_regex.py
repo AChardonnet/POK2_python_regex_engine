@@ -10,3 +10,6 @@ def test_alternation_parsing():
         assertionErrorRaised = True
     assert assertionErrorRaised, "Should raise AssertionError"
 
+def test_concatenation_parsing():
+    assert pyregex.parse_concatenation("ab", 0) == ("concatenation", "a", "b")
+    assert pyregex.parse_concatenation("ba", 0) == ("concatenation", "b", "a")
