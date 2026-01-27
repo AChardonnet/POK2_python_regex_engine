@@ -40,3 +40,21 @@ def test_backtracking_alternation_concatenation():
     assert backtracking.regex_match_backtrack(node, "ac") == True
     assert backtracking.regex_match_backtrack(node, "ba") == False
     assert backtracking.regex_match_backtrack(node, "abc") == False
+
+
+def test_backtracking_repeat():
+    # a*
+    node = ("repeat", "a", 0, float("inf"))
+    assert backtracking.regex_match_backtrack(node, "") == True
+    assert backtracking.regex_match_backtrack(node, "a") == True
+    assert backtracking.regex_match_backtrack(node, 42 * "a") == True
+    # a+
+    node = ("repeat", "a", 1, float("inf"))
+    assert backtracking.regex_match_backtrack(node, "") == False
+    assert backtracking.regex_match_backtrack(node, "a") == True
+    assert backtracking.regex_match_backtrack(node, 42 * "a") == True
+    # a{4,42}
+    node = ("repeat", "a", 4, 42)
+    assert backtracking.regex_match_backtrack(node, "") == False
+    assert backtracking.regex_match_backtrack(node, "a") == False
+    assert backtracking.regex_match_backtrack(node, 42 * "a") == True

@@ -1,3 +1,6 @@
+REGEX_MAX_REPEAT = 424242424242
+
+
 def regex_match_backtrack(node, text):
     for index in match_backtrack_alternation(node, text, 0):
         print(index)
@@ -18,6 +21,8 @@ def match_backtrack_alternation(node, text, index):
     elif node[0] == "alternation":
         yield from match_backtrack_alternation(node[1], text, index)
         yield from match_backtrack_alternation(node[2], text, index)
+    elif node[0] == "repeat":
+        yield from match_backtrack_repeat(node, text, index)
 
 
 def match_backtrack_concatenation(node, text, index):
@@ -29,4 +34,21 @@ def match_backtrack_concatenation(node, text, index):
         yield from match_backtrack_alternation(node[2], text, index1)
 
 
-print(regex_match_backtrack(("concatenation", "a", "b"), "ab"))
+def match_backtrack_repeat(node, text, index):
+    _, node, rmin, rmax = node
+    rmax = min(rmax, REGEX_MAX_REPEAT)
+    output = []
+    if rmin == 0:
+        output.append(index)
+    start = {index}
+    for i in range(1, rmax + 1):
+        found = set()
+        for index1 in start:
+            for index2 in match_backtrack_alternation(node, text, index1):
+                found.add(index2)
+                if i >= rmin:
+                    output.append(index2)
+        if not found:
+            break
+        start = found
+    yield from reversed(output)
