@@ -15,6 +15,9 @@ def match_backtrack_alternation(node, text, index):
             yield 1 + index
     elif node[0] == "concatenation":
         yield from match_backtrack_concatenation(node, text, index)
+    elif node[0] == "alternation":
+        yield from match_backtrack_alternation(node[1], text, index)
+        yield from match_backtrack_alternation(node[2], text, index)
 
 
 def match_backtrack_concatenation(node, text, index):
