@@ -1,7 +1,9 @@
 REGEX_MAX_REPEAT = 424242424242
 
 def parse(string):
-    pass
+    index, tree = parse_alternation(string, 0)
+    assert index == len(string), "parsing stopped early"
+    return tree
 
 # a|b, ab|cd
 def parse_alternation(string, index):

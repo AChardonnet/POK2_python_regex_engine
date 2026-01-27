@@ -46,3 +46,12 @@ def test_repeat_parsing():
     assert pyregex.parse_alternation("a*", 0) == (2, ("repeat", "a", 0, float("inf")))
     assert pyregex.parse_alternation("a+", 0) == (2, ("repeat", "a", 1, float("inf")))
     assert pyregex.parse_alternation("a{4,42}", 0) == (7, ("repeat", "a", 4, 42))
+
+def test_parsing():
+    assert pyregex.parse("") is None
+    assert pyregex.parse("a") == "a"
+    assert pyregex.parse("ab") == ("concatenation", "a", "b")
+    assert pyregex.parse("a|b") == ("alternation", "a", "b")
+    assert pyregex.parse("a+") == ("repeat", "a", 1, float("inf"))
+    assert pyregex.parse("a{2,42}") == ("repeat", "a", 2, 42)
+    assert pyregex.parse("a|bc") == ("alternation", "a", ("concatenation", "b", "c"))
