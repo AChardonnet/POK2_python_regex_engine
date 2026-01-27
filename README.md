@@ -19,3 +19,7 @@ python -m venv venv
 pip install -r requirements.txt
 pip install -e .
 ```
+
+## Usage
+
+The function `pyregex.regex_match(regex, string)` matches the `string` to the `regex`

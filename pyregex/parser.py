@@ -1,9 +1,11 @@
 REGEX_MAX_REPEAT = 424242424242
 
+
 def parse(string):
     index, tree = parse_alternation(string, 0)
     assert index == len(string), "parsing stopped early"
     return tree
+
 
 # a|b, ab|cd
 def parse_alternation(string, index):
@@ -15,6 +17,7 @@ def parse_alternation(string, index):
         index, right = parse_concatenation(string, index + 1)
         left = ("alternation", left, right)
     return index, left
+
 
 # abc...  (complete)
 def parse_concatenation(string, index):
@@ -36,7 +39,7 @@ def parse_character(string, index):
     assert character not in "|)"
     if character == "(":
         index, node = parse_alternation(string, index)
-        if index < len(string) and string[index] ==")":
+        if index < len(string) and string[index] == ")":
             index += 1
         else:
             raise Exception("missing )")
@@ -47,10 +50,11 @@ def parse_character(string, index):
     index, node = parse_repeat(string, index, node)
     return index, node
 
+
 def parse_repeat(string, index, node):
     if index == len(string) or string[index] not in "*+{":
         return index, node
-    
+
     character = string[index]
     index += 1
     if character == "*":
@@ -69,23 +73,22 @@ def parse_repeat(string, index, node):
                 rmax = float("inf")
         if index < len(string) and string[index] == "}":
             index += 1
-        else: 
+        else:
             raise Exception("expected }")
-    
+
     assert rmin < rmax, "min repeat should be lesser than max repeat"
     assert rmin < REGEX_MAX_REPEAT
-    
+
     node = ("repeat", node, rmin, rmax)
     return index, node
 
+
 def parse_int(string, index):
     start = index
-    while index < len(string) and string[index].isdigit() :
+    while index < len(string) and string[index].isdigit():
         index += 1
-    if start != index :
+    if start != index:
         toReturn = int(string[start:index])
     else:
         toReturn = None
     return index, toReturn
-
-print(parse_alternation("a{4,42}", 0))

@@ -3,7 +3,6 @@ REGEX_MAX_REPEAT = 424242424242
 
 def regex_match_backtrack(node, text):
     for index in match_backtrack_alternation(node, text, 0):
-        print(index)
         if index == len(text):
             return True
     return False
