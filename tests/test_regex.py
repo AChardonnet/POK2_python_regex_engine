@@ -7,6 +7,9 @@ def test_alternation_parsing():
 def test_alternation_long_parsing():
     assert pyregex.parse_alternation("ab|cd", 0) == (5, ("alternation", ("concatenation", "a", "b"), ("concatenation", "c", "d")))
 
+def test_alternation_multiple_parsing():
+    assert pyregex.parse_alternation("a|b|c", 0) == (5, ("alternation", ("alternation", "a", "b"), "c"))
+
 def test_concatenation_parsing():
     assert pyregex.parse_concatenation("ab", 0) == (2, ("concatenation", "a", "b"))
     assert pyregex.parse_concatenation("ba", 0) == (2, ("concatenation", "b", "a"))

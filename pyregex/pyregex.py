@@ -4,9 +4,11 @@ def parse(string):
 # a|b, ab|cd
 def parse_alternation(string, index):
     index, left = parse_concatenation(string, index)
-    assert string[index] == "|", "There is a problem"
-    index, right = parse_concatenation(string, index + 1)
-    return index, ("alternation", left, right)
+    while index < len(string):
+        assert string[index] == "|", "There is a problem"
+        index, right = parse_concatenation(string, index + 1)
+        left = ("alternation", left, right)
+    return index, left
 
 # abc...  (complete)
 def parse_concatenation(string, index):
