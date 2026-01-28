@@ -7,6 +7,7 @@ def test_backtracking_None():
 
 def test_backtracking_single_char():
     assert backtracking.regex_match_backtrack("a", "a") == True
+    assert backtracking.regex_match_backtrack("a", "aa") == False
     assert backtracking.regex_match_backtrack("a", "b") == False
 
 
@@ -58,3 +59,8 @@ def test_backtracking_repeat():
     assert backtracking.regex_match_backtrack(node, "") == False
     assert backtracking.regex_match_backtrack(node, "a") == False
     assert backtracking.regex_match_backtrack(node, 42 * "a") == True
+    # a?
+    node = ("repeat", "a", 0, 1)
+    assert backtracking.regex_match_backtrack(node, "") == True
+    assert backtracking.regex_match_backtrack(node, "a") == True
+    assert backtracking.regex_match_backtrack(node, 42 * "a") == False

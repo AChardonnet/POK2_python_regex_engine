@@ -43,7 +43,7 @@ def parse_character(string, index):
             index += 1
         else:
             raise Exception("missing )")
-    elif character in "*+{":
+    elif character in "*+{?":
         raise Exception("first charcter cannot be a repeat")
     else:
         node = character
@@ -52,7 +52,7 @@ def parse_character(string, index):
 
 
 def parse_repeat(string, index, node):
-    if index == len(string) or string[index] not in "*+{":
+    if index == len(string) or string[index] not in "*+{?":
         return index, node
 
     character = string[index]
@@ -63,6 +63,9 @@ def parse_repeat(string, index, node):
     elif character == "+":
         rmin = 1
         rmax = float("inf")
+    elif character == "?":
+        rmin = 0
+        rmax = 1
     else:
         index, rmin = parse_int(string, index)
         if rmin is None:
