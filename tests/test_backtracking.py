@@ -7,6 +7,7 @@ def test_backtracking_None():
 
 def test_backtracking_single_char():
     assert backtracking.regex_match_backtrack("a", "a") == True
+    assert backtracking.regex_match_backtrack("a", "aa") == False
     assert backtracking.regex_match_backtrack("a", "b") == False
 
 
